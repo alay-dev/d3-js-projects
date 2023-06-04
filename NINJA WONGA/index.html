@@ -1,0 +1,117 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <style>
+    h2, p{
+      margin: 10px 0;
+    }
+    header{
+      margin-bottom: 40px;
+    }
+    .center-text {
+      font-size: 1rem ;
+      fill :#eee;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .center-text-val {
+      font-size: 2rem ;
+      fill :#fff;
+    }
+    .path-rev{
+      stroke-dasharray: 1100;
+      stroke-dashoffset: -1000;
+      animation: dash 1s linear forwards;
+
+        }
+        .path{
+          stroke-dasharray: 1100;
+      stroke-dashoffset: 1000;
+      animation: dash 1s linear forwards;
+        }
+
+        @keyframes dash {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+    .tip.card {
+      padding: 0.4rem 0.9rem;
+      border-radius: 0.5rem;
+      background-color: #333;
+      color: #fff;
+    }
+
+    .tip .delete {
+      color: hotpink;
+      font-size: 0.9rem;
+    }
+  </style>
+  <title>Ninja Wonga</title>
+</head>
+<body class="indigo">
+
+  <header class="indigo darken-1 section">
+    <h2 class="center white-text">Ninja Wonga</h2>
+    <p class="flow-text grey-text center text-lighten-2">Monthly money tracker for ninjas...</p>
+  </header>
+
+  <div class="container section">
+    <div class="row">
+      <div class="col s12 m6">
+        <form class="card z-depth-0">
+          <div class="card-content">
+            <span class="card-title indigo-text">Add Item:</span>
+            <div class="input-field">
+              <input type="text" id="name">
+              <label for="name">Item Name</label>
+            </div>
+            <div class="input-field">
+              <input type="text" id="cost">
+              <label for="cost">Item Cost (£)</label>
+            </div>
+            <div class="input-field center">
+              <button type="submit" class="btn-large pink white-text">Add Item</button>
+            </div>
+            <div class="input-field center">
+              <p id="error" class="red-text"></p>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="col s12 m5 push-m1">
+        <div class="canvas"></div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Compiled and minified JavaScript -->
+
+  <script src="https://www.gstatic.com/firebasejs/5.4.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.4.2/firebase-firestore.js"></script>
+  <script>
+    // Initialize Firebase
+    const config = {
+        apiKey: "AIzaSyBHsXDhJgV17M1bx_Tkshsj5Pnanr2PV8U",
+        authDomain: "d3-projects-f744b.firebaseapp.com",
+        projectId: "d3-projects-f744b",
+        storageBucket: "d3-projects-f744b.appspot.com",
+        messagingSenderId: "432762011623",
+        appId: "1:432762011623:web:b9c5987e844bf026bdc742"
+    };
+    firebase.initializeApp(config);
+    const db = firebase.firestore();
+    const settings = {timestampsInSnapshots: true};
+    db.settings(settings);
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.js" integrity="sha512-5mCB0Kvv97yTzqo0174qxPjMisck/WlK51+mw/RV7UfYbtHI8LuLR82BzZuxHUKSfbh75u9cZHgUcqrZDaBJuA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.9.1/d3-tip.js" integrity="sha512-jaNmuLbHtQ1ND+i63wVvwBd9T2hB3gTnk3x0Pp5R+AJwDdyzMe3t0vQqwUSoI9a/Ol1nscGV/1et4zSwL0P3AA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="index.js"></script>
+  <script src="graph.js"></script>
+</body>
+</html>
