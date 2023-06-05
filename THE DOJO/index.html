@@ -1,0 +1,80 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <title>The Dojo</title>
+  <style>
+    .tip.card {
+      padding: 0.4rem 0.9rem;
+      border-radius: 0.5rem;
+      background-color: #333;
+      color: #fff;
+    }
+
+    .tip .delete {
+      color: hotpink;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body class="grey darken-4">
+
+    <div class="nav z-depth-0">
+      <div class="section center">
+        <h3 class="white-text center">- The Dojo -</h3>
+      </div> 
+    </div>
+      
+    <div class="section center">
+      <p class="grey-text flow-text">A fitness tracker for ninjas</p>
+    </div>
+
+    <div class="container section">
+      <div class="row">
+        <div class="col s12 l5">
+          <button class="active" data-activity="cycling">Cycling</button>
+          <button data-activity="running">Running</button>
+          <button data-activity="swimming">Swimming</button>
+          <button data-activity="walking">Walking</button>
+        </div>
+        <div class="col s12 l6 push-l1">
+          <div class="canvas"></div>
+        </div>
+      </div>
+      <div class="row">
+        <form class="col m6 push-m3">
+          <p class="flow-text grey-text center">How much <span>cycling</span> have you done today?</p>
+          <input class="grey-text" type="text" id="cycling" placeholder="Distance in km" />
+          <p class="center pink-text error text-lighten-1"></p>
+        </form>
+      </div>
+    </div>
+
+  
+  <script src="https://www.gstatic.com/firebasejs/5.4.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.4.2/firebase-firestore.js"></script>
+  <script>
+    // Initialize Firebase
+    const config = {
+        apiKey: "AIzaSyBHsXDhJgV17M1bx_Tkshsj5Pnanr2PV8U",
+        authDomain: "d3-projects-f744b.firebaseapp.com",
+        projectId: "d3-projects-f744b",
+        storageBucket: "d3-projects-f744b.appspot.com",
+        messagingSenderId: "432762011623",
+        appId: "1:432762011623:web:b9c5987e844bf026bdc742"
+    };
+    firebase.initializeApp(config);
+    const db = firebase.firestore();
+    const settings = {timestampsInSnapshots: true};
+    db.settings(settings);
+  </script>
+  <script src="https://d3js.org/d3.v5.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.9.1/d3-tip.js" integrity="sha512-jaNmuLbHtQ1ND+i63wVvwBd9T2hB3gTnk3x0Pp5R+AJwDdyzMe3t0vQqwUSoI9a/Ol1nscGV/1et4zSwL0P3AA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="index.js"></script>
+  <script src="graph.js"></script>
+</body>
+</html>
