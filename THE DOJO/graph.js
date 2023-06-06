@@ -45,9 +45,9 @@ const xAxisGroup = graph
 
 const yAxisGroup = graph.append("g").attr("class", "y-axis");
 
-//d3 line path generator
+//d3 area path generator
 
-const line = d3
+const area = d3
   .area()
   .x(function (d) {
     return x(new Date(d.date));
@@ -58,8 +58,23 @@ const line = d3
   })
   .curve(d3.curveNatural);
 
+// d3 line path generator
+
+const line = d3
+  .line()
+  .x(function (d) {
+    return x(new Date(d.date));
+  })
+  .y(function (d) {
+    return y(d.distance);
+  })
+  .curve(d3.curveNatural);
+
+// area path element
+const areaPath = graph.append("path");
+
 // line path element
-const path = graph.append("path");
+const linePath = graph.append("path");
 
 const tip = d3
   .tip()
@@ -80,19 +95,30 @@ const update = (data) => {
   x.domain(d3.extent(data, (d) => new Date(d.date)));
   y.domain([0, d3.max(data, (d) => d.distance)]);
 
-  // update path data
-  path
+  // update area data
+  areaPath
     .data([data])
     .attr("fill", "url(#grad1)")
     .attr("stroke", "#fff")
-    .attr("stroke-width", 2)
+    .attr("d", area);
+
+  linePath
+    .data([data])
+    .attr("fill", "none")
+    .attr("stroke", "#fff")
     .attr("d", line);
 
   // Create circles for objects
-  const circles = graph.selectAll("circle").data(data);
+  graph.append("circle").attr("class", ".circle-point");
+  const circles = graph.selectAll(".circle-point").data(data);
+
+  // Create circles outline
+  graph.append("circle").attr("class", ".circle-outline");
+  const circleOutline = graph.selectAll(".circle-outline").data(data);
 
   // delete points
   circles.exit().remove();
+  circleOutline.exit().remove();
 
   // update current points
   circles
@@ -100,25 +126,44 @@ const update = (data) => {
     .attr("cx", (d) => x(new Date(d.date)))
     .attr("cy", (d) => y(d.distance));
 
+  circleOutline
+    .attr("r", 6)
+    .attr("cx", (d) => x(new Date(d.date)))
+    .attr("cy", (d) => y(d.distance));
+
   // add new circles
   circles
     .enter()
     .append("circle")
+    .attr("class", "circle-point")
     .attr("r", 4)
     .attr("cx", (d) => x(new Date(d.date)))
     .attr("cy", (d) => y(d.distance))
-    .attr("fill", "#ccc")
+    .attr("fill", "#fff")
+    .transition()
+    .duration(750);
+
+  circleOutline
+    .enter()
+    .append("circle")
+    .attr("class", "circle-outline")
+    .attr("r", 6)
+    .attr("cx", (d) => x(new Date(d.date)))
+    .attr("cy", (d) => y(d.distance))
+    .attr("fill", "transparent")
+    .attr("stroke", "#fff")
+    .attr("Stroke-width", 2)
     .transition()
     .duration(750);
 
   graph
-    .selectAll("circle")
+    .selectAll(".circle-outline")
     .on("mouseover", (d, i, n) => {
-      handleMouseOver(d, i, n);
+      // handleMouseOver(d, i, n);
       tip.show(d, n[i]);
     })
     .on("mouseout", (d, i, n) => {
-      handleMouseOut(d, i, n);
+      // handleMouseOut(d, i, n);
       tip.hide(d, n[i]);
     });
 
